@@ -13,7 +13,7 @@ networks:
 services:
   prometheus:
     restart: unless-stopped
-    image: prom/prometheus
+    image: zeiot/rpi-prometheus:1.7.0
     container_name: prometheus
     volumes:
       - ./prometheus/:/etc/prometheus/
@@ -27,18 +27,13 @@ services:
       - '-web.console.templates=/usr/share/prometheus/consoles'
     ports:
       - 9090:9090
-    links:
-      - cadvisor:cadvisor
-      - alertmanager:alertmanager
-    depends_on:
-      - cadvisor
     networks:
       - back-tier
 
   node-exporter:
     restart: unless-stopped
     container_name: node-exporter
-    image: prom/node-exporter
+    image: zeiot/rpi-node_exporter:0.14.0
     volumes:
       - /proc:/host/proc
       - /sys:/host/sys
@@ -52,35 +47,9 @@ services:
     networks:
       - back-tier
 
-  alertmanager:
-    restart: unless-stopped
-    image: prom/alertmanager
-    ports:
-      - 9093:9093
-    volumes:
-      - ./alertmanager/:/etc/alertmanager/
-    networks:
-      - back-tier
-    command:
-      - '-config.file=/etc/alertmanager/config.yml'
-      - '-storage.path=/alertmanager'
-
-  cadvisor:
-    restart: unless-stopped
-    image: google/cadvisor
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    ports:
-      - 8080:8080
-    networks:
-      - back-tier
-
   grafana:
     restart: unless-stopped
-    image: grafana/grafana
+    image: fg2it/grafana-armhf:v4.1.2
     depends_on:
       - prometheus
     ports:
