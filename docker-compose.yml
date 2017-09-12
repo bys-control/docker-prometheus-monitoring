@@ -49,7 +49,7 @@ services:
 
   grafana:
     restart: unless-stopped
-    image: fg2it/grafana-armhf:v4.1.2
+    image: fg2it/grafana-armhf:v4.3.3
     depends_on:
       - prometheus
     ports:
