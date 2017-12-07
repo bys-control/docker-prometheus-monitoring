@@ -13,7 +13,7 @@ networks:
 services:
   prometheus:
     restart: unless-stopped
-    image: prom/prometheus
+    image: prom/prometheus:v1.8.2
     container_name: prometheus
     volumes:
       - ./prometheus/:/etc/prometheus/
@@ -38,7 +38,7 @@ services:
   node-exporter:
     restart: unless-stopped
     container_name: node-exporter
-    image: prom/node-exporter
+    image: prom/node-exporter:v0.14.0
     volumes:
       - /proc:/host/proc
       - /sys:/host/sys
@@ -80,7 +80,7 @@ services:
 
   grafana:
     restart: unless-stopped
-    image: grafana/grafana
+    image: grafana/grafana:4.6.2
     depends_on:
       - prometheus
     ports:
