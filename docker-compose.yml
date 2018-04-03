@@ -13,18 +13,17 @@ networks:
 services:
   prometheus:
     restart: unless-stopped
-    image: prom/prometheus
+    image: prom/prometheus:v2.2.1
     container_name: prometheus
     volumes:
       - ./prometheus/:/etc/prometheus/
       - prometheus_data:/prometheus
     command:
-      - '-config.file=/etc/prometheus/prometheus.yml'
-      - '-storage.local.path=/prometheus'
-      - '-storage.local.retention=1440h0m0s'
-      - '-alertmanager.url=http://alertmanager:9093'
-      - '-web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '-web.console.templates=/usr/share/prometheus/consoles'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=15d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
       - 9090:9090
     links:
@@ -38,15 +37,15 @@ services:
   node-exporter:
     restart: unless-stopped
     container_name: node-exporter
-    image: prom/node-exporter
+    image: prom/node-exporter:v0.15.2
     volumes:
       - /proc:/host/proc
       - /sys:/host/sys
       - /:/rootfs
     command:
-      - '-collector.procfs=/host/proc'
-      - '-collector.sysfs=/host/sysfs'
-      - '-collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+#      - '--collector.procfs=/host/proc'
+#      - '--collector.sysfs=/host/sysfs'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
     ports:
       - 9100:9100
     networks:
@@ -62,8 +61,8 @@ services:
     networks:
       - back-tier
     command:
-      - '-config.file=/etc/alertmanager/config.yml'
-      - '-storage.path=/alertmanager'
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
 
   cadvisor:
     restart: unless-stopped
@@ -80,7 +79,7 @@ services:
 
   grafana:
     restart: unless-stopped
-    image: grafana/grafana
+    image: grafana/grafana:5.0.4
     depends_on:
       - prometheus
     ports:
