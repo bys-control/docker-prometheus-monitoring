@@ -13,18 +13,17 @@ networks:
 services:
   prometheus:
     restart: unless-stopped
-    image: zeiot/rpi-prometheus:1.7.0
+    image: zeiot/rpi-prometheus:2.2.1.arm
     container_name: prometheus
     volumes:
       - ./prometheus/:/etc/prometheus/
       - prometheus_data:/prometheus
     command:
-      - '-config.file=/etc/prometheus/prometheus.yml'
-      - '-storage.local.path=/prometheus'
-      - '-storage.local.retention=1440h0m0s'
-      - '-alertmanager.url=http://alertmanager:9093'
-      - '-web.console.libraries=/usr/share/prometheus/console_libraries'
-      - '-web.console.templates=/usr/share/prometheus/consoles'
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=15d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
       - 9090:9090
     networks:
@@ -33,15 +32,15 @@ services:
   node-exporter:
     restart: unless-stopped
     container_name: node-exporter
-    image: zeiot/rpi-node_exporter:0.14.0
+    image: zeiot/rpi-node_exporter:v0.16.0-arm
     volumes:
       - /proc:/host/proc
       - /sys:/host/sys
       - /:/rootfs
     command:
-      - '-collector.procfs=/host/proc'
-      - '-collector.sysfs=/host/sysfs'
-      - '-collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+#      - '--collector.procfs=/host/proc'
+#      - '--collector.sysfs=/host/sysfs'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
     ports:
       - 9100:9100
     networks:
@@ -49,7 +48,7 @@ services:
 
   grafana:
     restart: unless-stopped
-    image: fg2it/grafana-armhf:v4.3.3
+    image: fg2it/grafana-armhf:v5.0.4
     depends_on:
       - prometheus
     ports:
