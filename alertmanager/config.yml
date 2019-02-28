@@ -7,4 +7,4 @@ receivers:
           - send_resolved: true
             username: '<username>'
             channel: '#<channel-name>'
-            api_url: '<incomming-webhook-url>'
+            api_url: 'http://slack.com'
