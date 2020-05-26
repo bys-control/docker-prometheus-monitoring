@@ -13,7 +13,7 @@ networks:
 services:
   prometheus:
     restart: unless-stopped
-    image: prom/prometheus:v2.9.2
+    image: prom/prometheus:v2.18.1
     container_name: prometheus
     volumes:
       - ./prometheus/:/etc/prometheus/
@@ -37,7 +37,7 @@ services:
   node-exporter:
     restart: unless-stopped
     container_name: node-exporter
-    image: prom/node-exporter:v0.18.0
+    image: prom/node-exporter:v1.0.0
     volumes:
       - /proc:/host/proc
       - /sys:/host/sys
@@ -53,7 +53,7 @@ services:
 
   alertmanager:
     restart: unless-stopped
-    image: prom/alertmanager:v0.17.0
+    image: prom/alertmanager:v0.20.0
     ports:
       - 9093:9093
     volumes:
@@ -79,11 +79,11 @@ services:
 
   grafana:
     restart: unless-stopped
-    image: grafana/grafana:6.1.6
+    image: grafana/grafana:7.0.1
     depends_on:
       - prometheus
     ports:
-      - 3000:3000
+      - 3003:3000
     volumes:
       - grafana_data:/var/lib/grafana
     env_file:
@@ -92,4 +92,4 @@ services:
       - back-tier
       - front-tier
     environment:
-      - GF_INSTALL_PLUGINS=natel-discrete-panel
+      - GF_INSTALL_PLUGINS=natel-discrete-panel,bessler-pictureit-panel,grafana-clock-panel,grafana-piechart-panel,neocat-cal-heatmap-panel,petrslavotinek-carpetplot-panel,flant-statusmap-panel,mxswat-separator-panel,michaeldmoore-multistat-panel,savantly-heatmap-panel
