@@ -72,6 +72,8 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
+# If you use docker in a snap package, uncomment the following line and comment the one above
+#      - /var/snap/docker/common/var-lib-docker:/var/lib/docker:ro
     ports:
       - 8080:8080
     networks:
