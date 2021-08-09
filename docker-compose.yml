@@ -13,7 +13,7 @@ networks:
 services:
   prometheus:
     restart: unless-stopped
-    image: prom/prometheus:v2.18.1
+    image: prom/prometheus:v2.28.1
     container_name: prometheus
     volumes:
       - ./prometheus/:/etc/prometheus/
@@ -21,7 +21,7 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
-      - '--storage.tsdb.retention=30d'
+      - '--storage.tsdb.retention=180d'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
     ports:
@@ -53,7 +53,7 @@ services:
 
   alertmanager:
     restart: unless-stopped
-    image: prom/alertmanager:v0.20.0
+    image: prom/alertmanager:v0.22.2
     ports:
       - 9093:9093
     volumes:
@@ -71,9 +71,9 @@ services:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
+#      - /var/lib/docker/:/var/lib/docker:ro
 # If you use docker in a snap package, uncomment the following line and comment the one above
-#      - /var/snap/docker/common/var-lib-docker:/var/lib/docker:ro
+      - /var/snap/docker/common/var-lib-docker:/var/lib/docker:ro
     ports:
       - 8080:8080
     networks:
@@ -81,7 +81,7 @@ services:
 
   grafana:
     restart: unless-stopped
-    image: grafana/grafana:7.0.1
+    image: grafana/grafana:8.1.1
     depends_on:
       - prometheus
     ports:
