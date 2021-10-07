@@ -13,7 +13,7 @@ networks:
 services:
   prometheus:
     restart: unless-stopped
-    image: prom/prometheus:v2.28.1
+    image: prom/prometheus:v2.30.3
     container_name: prometheus
     volumes:
       - ./prometheus/:/etc/prometheus/
@@ -53,7 +53,7 @@ services:
 
   alertmanager:
     restart: unless-stopped
-    image: prom/alertmanager:v0.22.2
+    image: prom/alertmanager:v0.23.0
     ports:
       - 9093:9093
     volumes:
@@ -81,7 +81,7 @@ services:
 
   grafana:
     restart: unless-stopped
-    image: grafana/grafana:8.1.1
+    image: grafana/grafana:8.2.0
     depends_on:
       - prometheus
     ports:
