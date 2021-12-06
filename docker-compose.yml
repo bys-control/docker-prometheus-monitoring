@@ -79,6 +79,21 @@ services:
     networks:
       - back-tier
 
+  process-exporter:
+    restart: unless-stopped
+    image: ncabatoff/process-exporter
+    volumes:
+      - /proc:/host/proc
+      - ./process-exporter/:/config/
+    command:
+      - '-procfs=/host/proc'
+      - '-config.path=/config/config.yml'
+    ports:
+      - 9256:9256
+    networks:
+      - back-tier
+    privileged: true
+
   grafana:
     restart: unless-stopped
     image: grafana/grafana:8.2.0
