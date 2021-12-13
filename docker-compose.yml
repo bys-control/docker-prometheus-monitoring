@@ -13,7 +13,7 @@ networks:
 services:
   prometheus:
     restart: unless-stopped
-    image: prom/prometheus:v2.30.3
+    image: prom/prometheus:v2.31.1
     container_name: prometheus
     volumes:
       - ./prometheus/:/etc/prometheus/
@@ -71,9 +71,9 @@ services:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
       - /sys:/sys:ro
-#      - /var/lib/docker/:/var/lib/docker:ro
+      - /var/lib/docker/:/var/lib/docker:ro
 # If you use docker in a snap package, uncomment the following line and comment the one above
-      - /var/snap/docker/common/var-lib-docker:/var/lib/docker:ro
+#      - /var/snap/docker/common/var-lib-docker:/var/lib/docker:ro
     ports:
       - 8080:8080
     networks:
@@ -96,7 +96,7 @@ services:
 
   grafana:
     restart: unless-stopped
-    image: grafana/grafana:8.2.0
+    image: grafana/grafana:8.3.2
     depends_on:
       - prometheus
     ports:
