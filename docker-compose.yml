@@ -96,7 +96,7 @@ services:
 
   grafana:
     restart: unless-stopped
-    image: grafana/grafana:8.3.2
+    image: grafana/grafana:8.3.4
     depends_on:
       - prometheus
     ports:
