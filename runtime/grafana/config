@@ -3,4 +3,3 @@ GF_USERS_ALLOW_SIGN_UP=false
 GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s:%(http_port)s/grafana/
 GF_SERVER_SERVE_FROM_SUB_PATH=true
 GF_SERVER_ENABLE_GZIP=true
-GF_INSTALL_PLUGINS=/plugins/flant-statusmap-panel-0.5.1.zip;flant-statusmap-panel,/plugins/grafana-clock-panel-2.1.0.any.zip;grafana-clock-panel,/plugins/grafana-piechart-panel-1.6.2.zip;grafana-piechart-panel,/plugins/michaeldmoore-multistat-panel-1.7.2.zip;michaeldmoore-multistat-panel,/plugins/natel-discrete-panel-0.1.1.zip;natel-discrete-panel,/plugins/petrslavotinek-carpetplot-panel-0.1.2.zip;petrslavotinek-carpetplot-panel,/plugins/volkovlabs-echarts-panel-3.4.0.zip;volkovlabs-echarts-panel
