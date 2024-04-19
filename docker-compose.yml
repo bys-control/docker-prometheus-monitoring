@@ -13,7 +13,7 @@ networks:
 services:
   prometheus:
     restart: unless-stopped
-    image: prom/prometheus:v2.48.0
+    image: prom/prometheus:v2.51.2
     container_name: prometheus
     volumes:
       - ./runtime/prometheus/:/etc/prometheus/
